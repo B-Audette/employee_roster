@@ -1,5 +1,5 @@
 # Employee Roster
-Node, [Express](https://expressjs.com/), [Inquirer](https://github.com/SBoudrias/Inquirer.js/) ,and mySQL made friends to make a happy employee roster you can read and update in the terminal.
+Node, [Express](https://expressjs.com/), [Inquirer](https://github.com/SBoudrias/Inquirer.js/), and mySQL made friends to make a happy employee roster you can read and update in the terminal.
 
 
 ## Installation 
