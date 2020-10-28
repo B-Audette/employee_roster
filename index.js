@@ -1,7 +1,8 @@
 const { prompt } = require("inquirer");
 const inquirer = require("inquirer");
 const mysql = require("mysql");
-require("console.table")
+const util = require("util"),
+printTable = require("console-table-printer")
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -104,12 +105,13 @@ async function readRoles() {
 })
 }
 
+//doesn't work, will not print out the departments list properly in prompt
 async function addRoles() {
-    console.log("Preparing to add new role ... \n");
     let departments = await connection.query("SELECT * from department", function(err, res) {
         if (err) throw err;
-        return res.map(({name}) => name)})
-        console.table(departments)
+        let departments = res.map(({name}) => name)
+    console.log("Preparing to add new role ... \n");
+})
     let role = await prompt([
         {
             name: "title",
@@ -130,5 +132,46 @@ async function addRoles() {
     
     menu();
 }
+//doesn't work, fails to print out anything
+async function readEmployees() {
+    console.log("Reading all employees ... \n");
+    let employees = await connection.query("SELECT * from employee", function(err, res) {
+    if (err) throw err;
+    console.log(res)
+    let employees = res.map(({first_name}) => first_name)
+    // let employees = res.map(({first_name, last_name}) => first_name, last_name)
+    console.log(employees)
+    
+ menu();
+})
+}   
+// Does not work, needs edited and tested
+async function addEmployee() {
+    let roles = await connection.query("SELECT * from role", function(err, res) {
+        if (err) throw err;
+        let roles = res.map(({name}) => name)
+    console.log("Preparing to add new employee ... \n");
+})
+    let employee = await prompt([
+        {
+            name: "first_name",
+            message: "What is the employees first name?"
+        },
+        {
+            name: "last_name",
+            message: "What is the employees last name?"
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "What role will this employee be assigned to?",
+            choices: roles
+        }])
+    await connection.query("INSERT INTO employee SET ?", employee)
+    console.log(`Added ${employee.first_name} ${employee.last_name} to employeerosterdb`);
+    
+    menu();
+}
+
 
 

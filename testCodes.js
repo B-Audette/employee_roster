@@ -1,12 +1,14 @@
 
+//setting example aside for self later
+
 const response = [
     {
         id:1,
-         title:"kevin",
+         title:"Ash",
     },
    {
          id:2,
-        name:"Brooke"
+        name:"Misty"
     }
  ]
 
@@ -23,7 +25,7 @@ const response = [
     {
         type:"list",
         name: "name_id",
-         message: "Which name would you chose",
+         message: "Which trainer would you chose",
          choices: nameChoices
      }
  ]).then( (response)=>console.log(response.name_id) )
